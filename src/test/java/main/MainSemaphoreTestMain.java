@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Created by Urko on 19/05/2016.
+ * Class used to test the main method.
  */
 public class MainSemaphoreTestMain {
 
@@ -19,6 +19,11 @@ public class MainSemaphoreTestMain {
     @Test
     public void mainTest() {
         mainSemaphore.main(new String[] {"-t", "Topic"});
+    }
+
+    @Test
+    public void mainTestError() {
+        mainSemaphore.main(null);
     }
 
     @After
