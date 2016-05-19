@@ -32,6 +32,11 @@ public class MainSemaphoreTestInit {
     }
 
     @Test
+    public void testInitArrayOutOfBounds() {
+        assertEquals(mainSemaphore.init(new String[]{}), true);
+    }
+
+    @Test
     public void testInitAllNull() {
         String [] args = new String[2];
         args[0] = null;

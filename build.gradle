@@ -3,7 +3,7 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 
-mainClassName = "main.Semaphore"
+mainClassName = "main.MainSemaphore"
 sourceCompatibility = 1.8
 version = '2.0'
 

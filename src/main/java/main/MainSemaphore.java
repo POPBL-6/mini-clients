@@ -17,7 +17,7 @@ public class MainSemaphore {
      */
     public boolean init(String [] args) {
         boolean error = false;
-        if (args == null) {
+        if ((args == null) || (args.length < 1)) {
             error = true;
             // TODO: Log error.
         } else if (args[0] != null) {
@@ -63,7 +63,6 @@ public class MainSemaphore {
     public static void main(String [] args) {
         MainSemaphore mainSemaphore = new MainSemaphore();
         if (!mainSemaphore.init(args)) {
-            // TODO: Log initializing program.
             mainSemaphore.launch();
         } else {
             // TODO: Log program finished.
