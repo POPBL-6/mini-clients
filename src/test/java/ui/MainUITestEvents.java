@@ -1,6 +1,7 @@
 package ui;
 
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +20,17 @@ public class MainUITestEvents {
 
     @Test
     public void testEventGreen() {
-        mainUI.setGreen(new ActionEvent());
+        mainUI.greenAreaClicked(null);
     }
 
     @Test
     public void testEventRed() {
-        mainUI.setRed(new ActionEvent());
+        mainUI.redAreaClicked(null);
+    }
+
+    @Test
+    public void testEventYellow() {
+        mainUI.amberAreaClicked(null);
     }
 
     @After

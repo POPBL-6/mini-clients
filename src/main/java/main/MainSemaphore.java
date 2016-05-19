@@ -44,8 +44,15 @@ public class MainSemaphore {
         return error;
     }
 
+    /**
+     * This method will launch JavaFX UI.
+     */
     public void launch() {
-        Application.launch(MainUI.class, (java.lang.String[]) null);
+        Application.launch(MainUI.class);
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     /**

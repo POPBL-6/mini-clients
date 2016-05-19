@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainUI">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <Button fx:id="redButton" layoutX="272.0" layoutY="178.0" mnemonicParsing="false" onAction="#setRed" prefHeight="25.0" prefWidth="48.0" text="Red" textFill="RED" />
-            <Button fx:id="greenButton" layoutX="320.0" layoutY="178.0" mnemonicParsing="false" onAction="#setGreen" text="Green" textFill="#00ff26" />
-      </children>
+         <children>
+            <ImageView fx:id="imageView" fitHeight="366.0" fitWidth="314.0" layoutX="164.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/none.png" />
+               </image>
+            </ImageView>
+            <Region layoutX="271.0" layoutY="55.0" onMouseClicked="#redAreaClicked" prefHeight="98.0" prefWidth="100.0" />
+            <Region layoutX="271.0" layoutY="163.0" onMouseClicked="#amberAreaClicked" prefHeight="98.0" prefWidth="100.0" />
+            <Region layoutX="270.0" layoutY="272.0" onMouseClicked="#greenAreaClicked" prefHeight="98.0" prefWidth="100.0" />
+         </children>
     </AnchorPane>
   </children>
 </VBox>
