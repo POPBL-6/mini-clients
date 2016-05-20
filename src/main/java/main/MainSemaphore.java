@@ -1,6 +1,8 @@
 package main;
 
 import javafx.application.Application;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ui.MainUI;
 
 /**
@@ -8,6 +10,7 @@ import ui.MainUI;
  */
 public class MainSemaphore {
 
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private String topic;
 
     /**
@@ -19,27 +22,28 @@ public class MainSemaphore {
         boolean error = false;
         if ((args == null) || (args.length < 1)) {
             error = true;
-            // TODO: Log error.
+            LOGGER.fatal("No arguments or necessary arguments passed.");
         } else if (args[0] != null) {
             switch (args[0]) {
                 case "-t":
                     if (args[1] == null) {
                         error = true;
-                        // TODO: Log error.
+                        LOGGER.error("Topic name argument is null.");
                     } else if (args[1].equals("")) {
                         error = true;
-                        // TODO: Log error.
+                        LOGGER.error("Topic name argument is empty.");
                     } else {
                         this.topic = args[1];
                     }
                     break;
                 default:
                     error = true;
-                    // TODO: Log error.
+                    LOGGER.fatal("Incompatible argument detected.");
                     break;
             }
         } else {
             error = true;
+            LOGGER.fatal("First argument is null.");
         }
         return error;
     }
@@ -48,7 +52,7 @@ public class MainSemaphore {
      * This method will launch JavaFX UI.
      */
     public void launch() {
-        Application.launch(MainUI.class);
+        Application.launch(MainUI.class, topic);
     }
 
     public String getTopic() {
@@ -63,10 +67,10 @@ public class MainSemaphore {
     public static void main(String [] args) {
         MainSemaphore mainSemaphore = new MainSemaphore();
         if (!mainSemaphore.init(args)) {
+            LOGGER.info("Program initialized.");
             mainSemaphore.launch();
         } else {
-            // TODO: Log program finished.
-            System.out.println("Program finished.");
+            LOGGER.fatal("Program has encountered issues in the initialization, aborting.");
         }
     }
 

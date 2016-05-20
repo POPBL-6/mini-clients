@@ -9,12 +9,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 
 /**
  * Class that will manage the whole UI.
  */
 public class MainUI extends Application {
 
+    private static final Logger LOGGER = LogManager.getLogger(MainUI.class);
     private static final String APP_TITLE = "Semaphore";
     private static final String IMAGE_NONE = "/images/none.png";
     private static final String IMAGE_RED = "/images/red.png";
@@ -30,8 +35,7 @@ public class MainUI extends Application {
      * This method will initialize the middleware and other components.
      */
     public void init() {
-        this.topic = getTopic();
-        System.out.println(topic);
+        this.topic = getTopic().get(0);
     }
 
     /**
@@ -39,26 +43,30 @@ public class MainUI extends Application {
      *
      * @return topic
      */
-    private String getTopic() {
-        return null;
+    private List<String> getTopic() {
+        return this.getParameters().getRaw();
     }
 
     @FXML
-    void amberAreaClicked(MouseEvent event) {
-        System.out.println("Sending amber to the middleware in " + topic);
-        imageView.setImage(new Image(String.valueOf(getClass().getResource(IMAGE_AMBER))));
+    public void amberAreaClicked(MouseEvent event) {
+        LOGGER.info("Sending amber to the middleware in " + topic + ".");
+        changeImage(IMAGE_AMBER);
     }
 
     @FXML
-    void greenAreaClicked(MouseEvent event) {
-        System.out.println("Sending green to the middleware in " + topic);
-        imageView.setImage(new Image(String.valueOf(getClass().getResource(IMAGE_GREEN))));
+    public void greenAreaClicked(MouseEvent event) {
+        LOGGER.info("Sending green to the middleware in " + topic + ".");
+        changeImage(IMAGE_GREEN);
     }
 
     @FXML
-    void redAreaClicked(MouseEvent event) {
-        System.out.println("Sending red to the middleware in " + topic);
-        imageView.setImage(new Image(String.valueOf(getClass().getResource(IMAGE_RED))));
+    public void redAreaClicked(MouseEvent event) {
+        LOGGER.info("Sending red to the middleware in " + topic + ".");
+        changeImage(IMAGE_RED);
+    }
+
+    private void changeImage(String path) {
+        imageView.setImage(new Image(String.valueOf(getClass().getResource(path))));
     }
 
     @Override
