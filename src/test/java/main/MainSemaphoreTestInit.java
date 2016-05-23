@@ -20,10 +20,46 @@ public class MainSemaphoreTestInit {
 
     @Test
     public void testInitGoodParameters() {
+        String [] args = new String[6];
+        args[0] = "-t";
+        args[1] = "Topic";
+        args[2] = "-a";
+        args[3] = "127.0.0.1";
+        args[4] = "-p";
+        args[5] = "6666";
+        assertEquals(mainSemaphore.init(args), false);
+    }
+
+    @Test
+    public void testInitGoodParametersTopic() {
         String [] args = new String[2];
         args[0] = "-t";
         args[1] = "Topic";
-        assertEquals(mainSemaphore.init(args), false);
+        assertEquals(mainSemaphore.init(args), true);
+    }
+
+    @Test
+    public void testInitGoodParametersAddress() {
+        String [] args = new String[2];
+        args[0] = "-a";
+        args[1] = "127.0.0.1";
+        assertEquals(mainSemaphore.init(args), true);
+    }
+
+    @Test
+    public void testInitGoodParametersPort() {
+        String [] args = new String[2];
+        args[0] = "-p";
+        args[1] = "6666";
+        assertEquals(mainSemaphore.init(args), true);
+    }
+
+    @Test
+    public void testInitIncompatibleParameter() {
+        String [] args = new String[2];
+        args[0] = "-z";
+        args[1] = "abc";
+        assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test

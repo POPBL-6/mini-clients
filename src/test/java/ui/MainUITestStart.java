@@ -9,21 +9,21 @@ import org.junit.Test;
  */
 public class MainUITestStart {
 
-    private MainUI mainUI;
+    private UI UI;
 
     @Before
     public void preTest() {
-        mainUI = new MainUI();
+        UI = new UI();
     }
 
     @Test (expected = Exception.class)
     public void testStart() throws Exception {
-        mainUI.start(null);
+        UI.start(null);
     }
 
     @After
     public void postTest() {
-        mainUI = null;
+        UI = null;
     }
 
 }

@@ -8,4 +8,4 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({MainUITestStart.class})
-public class MainUITest {}
+public class UITest {}
