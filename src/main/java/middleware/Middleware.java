@@ -37,20 +37,8 @@ public class Middleware {
     /**
      * Connect will try to connect to a broker in a concrete address and port using TCP.
      */
-    public void connectTCP() {
-        try {
-            this.connection = new PSPortTCP(address, port);
-        } catch (IOException e) {
-            LOGGER.fatal("Couldn't create a connection to the broker. Exception: " + e.getMessage());
-            LOGGER.info(e);
-        }
-    }
-
-    /**
-     * Connect will try to connect to a broker in a concrete address and port using SSl.
-     */
-    public void connectSSL() {
-        this.connection = new PSPortSSL(address, port);
+    public void connect(PSPort connection) {
+        this.connection = connection;
     }
 
     /**
@@ -64,22 +52,29 @@ public class Middleware {
     }
 
     /**
-     * This class sets the connection class (must be a PSPort class type)
+     * This method will send a message to the broker.
      *
-     * @param connection
+     * @param message
      */
-    public void setConnection(PSPort connection) {
-        this.connection = connection;
+    public void publish(MessagePublish message) {
+        connection.publish(message);
+        try {
+            this.value = message.getDataObject();
+        } catch (ClassNotFoundException | IOException e) {
+            LOGGER.fatal("Can't save last sample.");
+            LOGGER.info(e);
+        }
+        LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
     }
 
     /**
-     * This method will send a object value to the broker.
+     * This class wil create a MessagePublish object.
      *
      * @param value
+     * @return
      */
-    public void publish(Object value) {
+    public MessagePublish createMessage(Object value) {
         MessagePublish message = new MessagePublish();
-        this.value = value;
         message.setTopic(topic);
         try {
             message.setDataObject(value);
@@ -87,8 +82,7 @@ public class Middleware {
             LOGGER.fatal("An error has occurred setting a value to a message publication. Exception: " + e.getMessage());
             LOGGER.info(e);
         }
-        connection.publish(message);
-        LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
+        return message;
     }
 
     /**
@@ -113,21 +107,4 @@ public class Middleware {
         return topic;
     }
 
-    /**
-     * This method returns the address of the broker.
-     *
-     * @return address
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * This method returns the port of the broker.
-     *
-     * @return port
-     */
-    public int getPort() {
-        return port;
-    }
 }

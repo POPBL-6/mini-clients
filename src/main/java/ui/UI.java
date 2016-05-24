@@ -22,7 +22,6 @@ public class UI extends Application {
 
     private static final Logger LOGGER = LogManager.getLogger(UI.class);
     private static final String APP_TITLE = "Semaphore";
-    private static final String IMAGE_NONE = "/images/none.png";
     private static final String IMAGE_RED = "/images/red.png";
     private static final String IMAGE_AMBER = "/images/amber.png";
     private static final String IMAGE_GREEN = "/images/green.png";
@@ -75,7 +74,7 @@ public class UI extends Application {
     @FXML
     public void amberAreaClicked(MouseEvent event) {
         LOGGER.info("Sending amber to the middleware in " + middleware.getTopic() + ".");
-        middleware.publish("AMBER");
+        middleware.publish(middleware.createMessage("AMBER"));
         changeImage(IMAGE_AMBER);
     }
 
@@ -87,7 +86,7 @@ public class UI extends Application {
     @FXML
     public void greenAreaClicked(MouseEvent event) {
         LOGGER.info("Sending green to the middleware in " + middleware.getTopic() + ".");
-        middleware.publish("GREEN");
+        middleware.publish(middleware.createMessage("GREEN"));
         changeImage(IMAGE_GREEN);
     }
 
@@ -99,7 +98,7 @@ public class UI extends Application {
     @FXML
     public void redAreaClicked(MouseEvent event) {
         LOGGER.info("Sending red to the middleware in " + middleware.getTopic() + ".");
-        middleware.publish("RED");
+        middleware.publish(middleware.createMessage("RED"));
         changeImage(IMAGE_RED);
     }
 
