@@ -1,6 +1,5 @@
 package middleware;
 
-import org.easymock.TestSubject;
 import org.junit.After;
 import org.junit.Test;
 

@@ -1,14 +1,12 @@
 package middleware;
 
 import api.PSPort;
-import data.MessagePublish;
-import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
 
 /**
  * This class will test the publish method of the Middleware.
