@@ -1,5 +1,6 @@
 package ui;
 
+import api.PSPortTCP;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +37,8 @@ public class UI extends Application {
      */
     @Override
     public void init() throws IOException {
-        middleware = new Middleware(getAddress(), Integer.parseInt(getPort()), getTopic());
+        middleware = new Middleware(getTopic());
+        middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
     }
 
     /**

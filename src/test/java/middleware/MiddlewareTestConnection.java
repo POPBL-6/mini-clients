@@ -23,7 +23,7 @@ public class MiddlewareTestConnection {
 
     @Before
     public void preTest() {
-        middleware = new Middleware("127.0.0.1", 6666, "Topic");
+        middleware = new Middleware("Topic");
         connectionMock = createMock(PSPort.class);
     }
 

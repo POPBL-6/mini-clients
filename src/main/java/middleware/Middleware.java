@@ -1,8 +1,6 @@
 package middleware;
 
 import api.PSPort;
-import api.PSPortSSL;
-import api.PSPortTCP;
 import data.MessagePublish;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,8 +13,6 @@ import java.io.IOException;
 public class Middleware {
 
     private static final Logger LOGGER = LogManager.getLogger(Middleware.class);
-    private String address;
-    private int port;
     private PSPort connection;
     private String topic;
     private Object value;
@@ -24,13 +20,9 @@ public class Middleware {
     /**
      * This constructor sets the needed variables to connect and executes "connect()" method.
      *
-     * @param address
-     * @param port
      * @param topic
      */
-    public Middleware(String address, int port, String topic) {
-        this.address = address;
-        this.port = port;
+    public Middleware(String topic) {
         this.topic = topic;
     }
 
