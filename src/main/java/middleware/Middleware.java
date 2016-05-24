@@ -42,6 +42,7 @@ public class Middleware {
             this.connection = new PSPortTCP(address, port);
         } catch (IOException e) {
             LOGGER.fatal("Couldn't create a connection to the broker. Exception: " + e.getMessage());
+            LOGGER.info(e);
         }
     }
 
@@ -67,6 +68,7 @@ public class Middleware {
             message.setDataObject(value);
         } catch (IOException e) {
             LOGGER.fatal("An error has occurred setting a value to a message publication. Exception: " + e.getMessage());
+            LOGGER.info(e);
         }
         connection.publish(message);
         LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
