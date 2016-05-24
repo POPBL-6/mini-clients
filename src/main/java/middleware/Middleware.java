@@ -1,6 +1,7 @@
 package middleware;
 
 import api.PSPort;
+import api.PSPortSSL;
 import api.PSPortTCP;
 import data.MessagePublish;
 import org.apache.logging.log4j.LogManager;
@@ -31,13 +32,12 @@ public class Middleware {
         this.address = address;
         this.port = port;
         this.topic = topic;
-        connect();
     }
 
     /**
-     * Connect will try to connect to a broker in a concrete address and port.
+     * Connect will try to connect to a broker in a concrete address and port using TCP.
      */
-    private void connect() {
+    public void connectTCP() {
         try {
             this.connection = new PSPortTCP(address, port);
         } catch (IOException e) {
@@ -47,12 +47,29 @@ public class Middleware {
     }
 
     /**
-     * This method will return the topic of the client.
-     *
-     * @return topic
+     * Connect will try to connect to a broker in a concrete address and port using SSl.
      */
-    public String getTopic() {
-        return topic;
+    public void connectSSL() {
+        this.connection = new PSPortSSL(address, port);
+    }
+
+    /**
+     * This method will close the connection to the broker.
+     */
+    public void disconnect() {
+        if (connection != null) {
+            connection.disconnect();
+            LOGGER.info("Closing connection.");
+        }
+    }
+
+    /**
+     * This class sets the connection class (must be a PSPort class type)
+     *
+     * @param connection
+     */
+    public void setConnection(PSPort connection) {
+        this.connection = connection;
     }
 
     /**
@@ -75,23 +92,6 @@ public class Middleware {
     }
 
     /**
-     * This method will close the connection to the broker.
-     */
-    public void kill() {
-        if (connection != null) {
-            connection.disconnect();
-            LOGGER.info("Closing connection.");
-        }
-    }
-
-    /**
-     * This method will try to reconnect to the broker.
-     */
-    public void reconnect() {
-        connect();
-    }
-
-    /**
      * This method returns the object value of the last message sent to the broker.
      * If in this execution there is no last message saved in the program, the method will ask for it to the broker.
      *
@@ -104,4 +104,30 @@ public class Middleware {
         return value;
     }
 
+    /**
+     * This method will return the topic of the client.
+     *
+     * @return topic
+     */
+    public String getTopic() {
+        return topic;
+    }
+
+    /**
+     * This method returns the address of the broker.
+     *
+     * @return address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * This method returns the port of the broker.
+     *
+     * @return port
+     */
+    public int getPort() {
+        return port;
+    }
 }
