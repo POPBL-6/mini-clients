@@ -82,14 +82,29 @@ public class MainSemaphore {
         }
     }
 
+    /**
+     * This method sets the topic of the client.
+     *
+     * @param topic
+     */
     public void setTopic(String topic) {
         this.topic = topic;
     }
 
+    /**
+     * This method sets the address of the broker to connect.
+     *
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * This method sets the port of the broker to connect.
+     *
+     * @param port
+     */
     public void setPort(String port) {
         this.port = port;
     }
