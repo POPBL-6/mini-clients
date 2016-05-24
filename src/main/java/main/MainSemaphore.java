@@ -53,7 +53,7 @@ public class MainSemaphore {
      */
     private boolean checkArgs(String [] args) {
         boolean error = false;
-        if (args == null) {
+        if ((args == null) || (args.length == 0)) {
             error = true;
             LOGGER.fatal("No arguments or necessary arguments passed.");
         } else {
