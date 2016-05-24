@@ -58,7 +58,7 @@ public class MainSemaphore {
             LOGGER.fatal("No arguments or necessary arguments passed.");
         } else {
             for (String arg : args) {
-                if ((arg == null) || (arg.equals(""))) {
+                if ((arg == null) || (("").equals(arg))) {
                     error = true;
                     LOGGER.fatal("Some arguments are null.");
                     break;

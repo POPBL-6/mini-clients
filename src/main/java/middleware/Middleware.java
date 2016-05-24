@@ -16,7 +16,7 @@ public class Middleware {
     private static final Logger LOGGER = LogManager.getLogger(Middleware.class);
     private String address;
     private int port;
-    private PSPort middleware;
+    private PSPort connection;
     private String topic;
     private Object value;
 
@@ -39,9 +39,9 @@ public class Middleware {
      */
     private void connect() {
         try {
-            this.middleware = new PSPortTCP(address, port);
+            this.connection = new PSPortTCP(address, port);
         } catch (IOException e) {
-            LOGGER.fatal("Couldn't create a connection to the broker.");
+            LOGGER.fatal("Couldn't create a connection to the broker. Exception: " + e.getMessage());
         }
     }
 
@@ -66,9 +66,9 @@ public class Middleware {
         try {
             message.setDataObject(value);
         } catch (IOException e) {
-            LOGGER.fatal("An error has occurred setting a value to a message publication.");
+            LOGGER.fatal("An error has occurred setting a value to a message publication. Exception: " + e.getMessage());
         }
-        middleware.publish(message);
+        connection.publish(message);
         LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
     }
 
@@ -76,9 +76,9 @@ public class Middleware {
      * This method will close the connection to the broker.
      */
     public void kill() {
-        if (middleware != null) {
-            middleware.disconnect();
-            LOGGER.info("Closing middleware.");
+        if (connection != null) {
+            connection.disconnect();
+            LOGGER.info("Closing connection.");
         }
     }
 
@@ -97,7 +97,7 @@ public class Middleware {
      */
     public Object getLastSample() {
         if (value == null) {
-            value = middleware.getLastSample(topic);
+            value = connection.getLastSample(topic);
         }
         return value;
     }
