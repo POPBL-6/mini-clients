@@ -14,19 +14,30 @@ import java.io.IOException;
 public class Middleware {
 
     private static final Logger LOGGER = LogManager.getLogger(Middleware.class);
+    private String address;
+    private int port;
     private PSPort middleware;
     private String topic;
     private Object value;
 
     /**
-     * This constructor
+     * This constructor sets the needed variables to connect and executes "connect()" method.
      *
      * @param address
      * @param port
      * @param topic
      */
     public Middleware(String address, int port, String topic) {
+        this.address = address;
+        this.port = port;
         this.topic = topic;
+        connect();
+    }
+
+    /**
+     * Connect will try to connect to a broker in a concrete address and port.
+     */
+    private void connect() {
         try {
             this.middleware = new PSPortTCP(address, port);
         } catch (IOException e) {
@@ -34,6 +45,11 @@ public class Middleware {
         }
     }
 
+    /**
+     * This method will return the topic of the client.
+     *
+     * @return topic
+     */
     public String getTopic() {
         return topic;
     }
@@ -54,6 +70,36 @@ public class Middleware {
         }
         middleware.publish(message);
         LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
+    }
+
+    /**
+     * This method will close the connection to the broker.
+     */
+    public void kill() {
+        if (middleware != null) {
+            middleware.disconnect();
+            LOGGER.info("Closing middleware.");
+        }
+    }
+
+    /**
+     * This method will try to reconnect to the broker.
+     */
+    public void reconnect() {
+        connect();
+    }
+
+    /**
+     * This method returns the object value of the last message sent to the broker.
+     * If in this execution there is no last message saved in the program, the method will ask for it to the broker.
+     *
+     * @return value
+     */
+    public Object getLastSample() {
+        if (value == null) {
+            value = middleware.getLastSample(topic);
+        }
+        return value;
     }
 
 }
