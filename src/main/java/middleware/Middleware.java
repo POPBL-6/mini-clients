@@ -20,23 +20,23 @@ public class Middleware {
     /**
      * This constructor sets the needed variables to connect and executes "connect()" method.
      *
-     * @param topic
+     * @param newTtopic
      */
-    public Middleware(String topic) {
-        this.topic = topic;
+    public Middleware(String newTtopic) {
+        topic = newTtopic;
     }
 
     /**
      * Connect will try to connect to a broker in a concrete address and port using TCP.
      */
-    public void connect(PSPort connection) {
-        this.connection = connection;
+    public final void connect(PSPort newConnection) {
+        connection = newConnection;
     }
 
     /**
      * This method will close the connection to the broker.
      */
-    public void disconnect() {
+    public final void disconnect() {
         if (connection != null) {
             connection.disconnect();
             LOGGER.info("Closing connection.");
@@ -48,7 +48,7 @@ public class Middleware {
      *
      * @param message
      */
-    public void publish(MessagePublish message) {
+    public final void publish(MessagePublish message) {
         connection.publish(message);
         try {
             this.value = message.getDataObject();
@@ -62,14 +62,14 @@ public class Middleware {
     /**
      * This class wil create a MessagePublish object.
      *
-     * @param value
+     * @param newValue
      * @return
      */
-    public MessagePublish createMessage(Object value) {
+    public final MessagePublish createMessage(Object newValue) {
         MessagePublish message = new MessagePublish();
         message.setTopic(topic);
         try {
-            message.setDataObject(value);
+            message.setDataObject(newValue);
         } catch (IOException e) {
             LOGGER.fatal("An error has occurred setting a value to a message publication. Exception: " + e.getMessage());
             LOGGER.info(e);
@@ -83,7 +83,7 @@ public class Middleware {
      *
      * @return value
      */
-    public Object getLastSample() {
+    public final Object getLastSample() {
         if (value == null) {
             value = connection.getLastSample(topic);
         }
@@ -95,7 +95,7 @@ public class Middleware {
      *
      * @return topic
      */
-    public String getTopic() {
+    public final String getTopic() {
         return topic;
     }
 

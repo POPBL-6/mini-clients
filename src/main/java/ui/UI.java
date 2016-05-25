@@ -36,7 +36,7 @@ public class UI extends Application {
      * This method will initialize the middleware and other components.
      */
     @Override
-    public void init() throws IOException {
+    public final void init() throws IOException {
         middleware = new Middleware(getTopic());
         middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
     }
@@ -74,7 +74,7 @@ public class UI extends Application {
      * @param event
      */
     @FXML
-    public void amberAreaClicked(MouseEvent event) {
+    public final void amberAreaClicked(MouseEvent event) {
         LOGGER.info("Sending amber to the middleware in " + middleware.getTopic() + ".");
         middleware.publish(middleware.createMessage("AMBER"));
         changeImage(IMAGE_AMBER);
@@ -86,7 +86,7 @@ public class UI extends Application {
      * @param event
      */
     @FXML
-    public void greenAreaClicked(MouseEvent event) {
+    public final void greenAreaClicked(MouseEvent event) {
         LOGGER.info("Sending green to the middleware in " + middleware.getTopic() + ".");
         middleware.publish(middleware.createMessage("GREEN"));
         changeImage(IMAGE_GREEN);
@@ -98,7 +98,7 @@ public class UI extends Application {
      * @param event
      */
     @FXML
-    public void redAreaClicked(MouseEvent event) {
+    public final void redAreaClicked(MouseEvent event) {
         LOGGER.info("Sending red to the middleware in " + middleware.getTopic() + ".");
         middleware.publish(middleware.createMessage("RED"));
         changeImage(IMAGE_RED);
@@ -117,11 +117,16 @@ public class UI extends Application {
      * This method will start the JavaFX UI.
      *
      * @param primaryStage
-     * @throws Exception
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(UI.class.getResource(FXML_PATH));
+    public final void start(Stage primaryStage) {
+        Parent parent = null;
+        try {
+            parent = FXMLLoader.load(UI.class.getResource(FXML_PATH));
+        } catch (IOException e) {
+            LOGGER.fatal("Can't find FXML file.");
+            LOGGER.info(e);
+        }
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.setTitle(APP_TITLE);

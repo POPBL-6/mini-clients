@@ -22,7 +22,7 @@ public class MainSemaphore {
      *      - "-a": The address of the broker.
      *      - "-p": The port of the broker.
      */
-    public boolean init(String [] args) {
+    public final boolean init(String ... args) {
         boolean error = false;
         if (!checkArgs(args)) {
             for (int i = 0; i < args.length; i += 2) {
@@ -51,7 +51,7 @@ public class MainSemaphore {
      * @param args
      * @return state
      */
-    private boolean checkArgs(String [] args) {
+    private boolean checkArgs(String ... args) {
         boolean error = false;
         if ((args == null) || (args.length == 0)) {
             error = true;
@@ -85,34 +85,34 @@ public class MainSemaphore {
     /**
      * This method sets the topic of the client.
      *
-     * @param topic
+     * @param newTopic
      */
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public final void setTopic(String newTopic) {
+        topic = newTopic;
     }
 
     /**
      * This method sets the address of the broker to connect.
      *
-     * @param address
+     * @param newAddress
      */
-    public void setAddress(String address) {
-        this.address = address;
+    public final void setAddress(String newAddress) {
+        address = newAddress;
     }
 
     /**
      * This method sets the port of the broker to connect.
      *
-     * @param port
+     * @param newPort
      */
-    public void setPort(String port) {
-        this.port = port;
+    public final void setPort(String newPort) {
+        port = newPort;
     }
 
     /**
      * This method will launch JavaFX UI.
      */
-    public void launch() {
+    public final void launch() {
         String [] args = new String[]{topic, address, port};
         Application.launch(UI.class, args);
     }
@@ -122,7 +122,7 @@ public class MainSemaphore {
      *
      * @param args
      */
-    public static void main(String [] args) {
+    public static void main(String ... args) {
         MainSemaphore mainSemaphore = new MainSemaphore();
         if (!mainSemaphore.init(args)) {
             LOGGER.info("Program initialized.");
