@@ -1,5 +1,6 @@
 package ui;
 
+import api.PSPortFactory;
 import api.PSPortSSL;
 import api.PSPortTCP;
 import javafx.application.Application;
@@ -16,6 +17,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
 /**
  * Class that will manage the whole UI.
@@ -49,7 +55,12 @@ public class UI extends Application {
     public final void init() throws IOException {
         middleware = new Middleware(getTopic());
         if (getConnection() == SSL_CODE) {
-            middleware.connect(new PSPortSSL(getAddress(), Integer.parseInt(getPort())));
+            try {
+                // TODO: Key store, trusted store and key store password.
+                middleware.connect(PSPortFactory.getPort("PSPortSSL -a " + getAddress() + " -p " + getPort()));
+            } catch (Throwable e) {
+                // TODO: Catch exception.
+            }
         } else if (getConnection() == TCP_CODE) {
             middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
         } else {
