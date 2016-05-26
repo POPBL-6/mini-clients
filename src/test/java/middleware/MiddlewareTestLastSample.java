@@ -11,12 +11,12 @@ public class MiddlewareTestLastSample {
     private Middleware middleware;
 
     @Before
-    public void preTest() {
+    public final void preTest() {
         middleware = new Middleware("Topic");
     }
 
     @Test (expected = NullPointerException.class)
-    public void testObjectNull() {
+    public final void testObjectNull() {
         middleware.getLastSample();
     }
 

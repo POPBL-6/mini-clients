@@ -105,7 +105,7 @@ public class Middleware {
      *
      * @return connection
      */
-    public PSPort getConnection() {
+    public final PSPort getConnection() {
         return connection;
     }
 

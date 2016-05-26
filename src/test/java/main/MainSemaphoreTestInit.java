@@ -12,108 +12,90 @@ import static org.junit.Assert.assertEquals;
 public class MainSemaphoreTestInit {
 
     private MainSemaphore mainSemaphore;
+    private static final String TOPIC_C = "-t";
+    private static final String TOPIC_NAME = "Topic";
+    private static final String ADDRESS_C = "-a";
+    private static final String ADDRESS_DIR = "127.0.0.1";
+    private static final String PORT_C = "-p";
+    private static final String PORT_NUM = "6666";
 
     @Before
-    public void preTest() {
+    public final void preTest() {
         mainSemaphore = new MainSemaphore();
     }
 
     @Test
-    public void testInitGoodParameters() {
-        String [] args = new String[6];
-        args[0] = "-t";
-        args[1] = "Topic";
-        args[2] = "-a";
-        args[3] = "127.0.0.1";
-        args[4] = "-p";
-        args[5] = "6666";
+    public final void testInitGoodParameters() {
+        String [] args = new String[]{TOPIC_C, TOPIC_NAME, ADDRESS_C, ADDRESS_DIR, PORT_C, PORT_NUM};
         assertEquals(mainSemaphore.init(args), false);
     }
 
     @Test
-    public void testInitGoodParametersTopic() {
-        String [] args = new String[2];
-        args[0] = "-t";
-        args[1] = "Topic";
+    public final void testInitGoodParametersTopic() {
+        String [] args = new String[]{TOPIC_C, TOPIC_NAME};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitGoodParametersAddress() {
-        String [] args = new String[2];
-        args[0] = "-a";
-        args[1] = "127.0.0.1";
+    public final void testInitGoodParametersAddress() {
+        String [] args = new String[]{ADDRESS_C, ADDRESS_DIR};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitGoodParametersPort() {
-        String [] args = new String[2];
-        args[0] = "-p";
-        args[1] = "6666";
+    public final void testInitGoodParametersPort() {
+        String [] args = new String[]{PORT_C, PORT_NUM};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitIncompatibleParameter() {
-        String [] args = new String[2];
-        args[0] = "-z";
-        args[1] = "abc";
+    public final void testInitIncompatibleParameter() {
+        String [] args = new String[]{"-z", "ABC"};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitNull() {
+    public final void testInitNull() {
         assertEquals(mainSemaphore.init(null), true);
     }
 
     @Test
-    public void testInitArrayOutOfBounds() {
+    public final void testInitArrayOutOfBounds() {
         assertEquals(mainSemaphore.init(new String[]{}), true);
     }
 
     @Test
-    public void testInitAllNull() {
-        String [] args = new String[2];
-        args[0] = null;
-        args[1] = null;
+    public final void testInitAllNull() {
+        String [] args = new String[]{null, null};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitFirstNull() {
-        String [] args = new String[2];
-        args[0] = null;
-        args[1] = "Topic";
+    public final void testInitFirstNull() {
+        String [] args = new String[]{null, TOPIC_NAME};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitFirstEmpty() {
-        String [] args = new String[2];
-        args[0] = "";
-        args[1] = "Topic";
+    public final void testInitFirstEmpty() {
+        String [] args = new String[]{"", TOPIC_NAME};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitTopicNull() {
-        String [] args = new String[2];
-        args[0] = "-t";
-        args[1] = null;
+    public final void testInitTopicNull() {
+        String [] args = new String[]{TOPIC_C, null};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @Test
-    public void testInitTopicEmpty() {
-        String [] args = new String[2];
-        args[0] = "-t";
-        args[1] = "";
+    public final void testInitTopicEmpty() {
+        String [] args = new String[]{TOPIC_C, ""};
         assertEquals(mainSemaphore.init(args), true);
     }
 
     @After
-    public void postTest() {
+    public final void postTest() {
         mainSemaphore = null;
     }
 

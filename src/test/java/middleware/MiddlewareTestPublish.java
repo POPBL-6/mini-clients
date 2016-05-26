@@ -7,6 +7,8 @@ import org.easymock.TestSubject;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
 
@@ -22,13 +24,13 @@ public class MiddlewareTestPublish {
     private PSPort connectionMock;
 
     @Before
-    public void preTest() {
+    public final void preTest() {
         middleware = new Middleware("Topic");
         connectionMock = createMock(PSPort.class);
     }
 
     @Test
-    public void testPublish() {
+    public final void testPublish() throws IOException, ClassNotFoundException {
         Object o = "I'm publishing this";
         // Record
         connectionMock.publish(anyObject());
@@ -38,16 +40,16 @@ public class MiddlewareTestPublish {
         middleware.connect(connectionMock);
         middleware.publish(middleware.createMessage(o));
         verify();
-        assertEquals(middleware.getLastSample(), middleware.createMessage(o));
+        assertEquals(middleware.getLastSample(), middleware.createMessage(o).getDataObject());
     }
 
     @Test (expected = NullPointerException.class)
-    public void testPublishNull() {
+    public final void testPublishNull() {
         middleware.publish(null);
     }
 
     @Test (expected = ClassCastException.class)
-    public void testPublishSerialization() {
+    public final void testPublishSerialization() {
         middleware.publish((MessagePublish) new Object());
     }
 

@@ -5,25 +5,25 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This class tests the startup of the JavaFX UI.
+ * This class tests the startup of the JavaFX ui.
  */
 public class MainUITestStart {
 
-    private UI UI;
+    private UI ui;
 
     @Before
-    public void preTest() {
-        UI = new UI();
+    public final void preTest() {
+        ui = new UI();
     }
 
     @Test (expected = Exception.class)
-    public void testStart() throws Exception {
-        UI.start(null);
+    public final void testStart() {
+        ui.start(null);
     }
 
     @After
-    public void postTest() {
-        UI = null;
+    public final void postTest() {
+        ui = null;
     }
 
 }

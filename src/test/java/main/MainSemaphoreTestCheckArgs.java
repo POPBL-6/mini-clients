@@ -15,92 +15,93 @@ import static org.junit.Assert.assertEquals;
 public class MainSemaphoreTestCheckArgs {
 
     private MainSemaphore mainSemaphore;
+    private static final String METHOD_NAME = "checkArgs";
 
     @Before
-    public void preTest() {
+    public final void preTest() {
         mainSemaphore = new MainSemaphore();
     }
 
     @Test
-    public void testInitNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{null});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitArrayOutOfBounds() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitArrayOutOfBounds() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{new String[]{}});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitAllNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitAllNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String [] args = new String[2];
         args[0] = null;
         args[1] = null;
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{args});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitFirstNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitFirstNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String [] args = new String[2];
         args[0] = null;
         args[1] = "Topic";
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{args});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitFirstEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitFirstEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String [] args = new String[2];
         args[0] = "";
         args[1] = "Topic";
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{args});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitTopicNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitTopicNull() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String [] args = new String[2];
         args[0] = "-t";
         args[1] = null;
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{args});
         assertEquals(result, true);
     }
 
     @Test
-    public void testInitTopicEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public final void testInitTopicEmpty() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         String [] args = new String[2];
         args[0] = "-t";
         args[1] = "";
         Class [] array = new Class []{String[].class};
-        Method method = MainSemaphore.class.getDeclaredMethod("checkArgs", array);
+        Method method = MainSemaphore.class.getDeclaredMethod(METHOD_NAME, array);
         method.setAccessible(true);
         boolean result = (Boolean) method.invoke(mainSemaphore, new Object[]{args});
         assertEquals(result, true);
     }
 
     @After
-    public void postTest() {
+    public final void postTest() {
         mainSemaphore = null;
     }
 

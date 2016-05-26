@@ -13,13 +13,13 @@ public class MiddlewareTestConstructor {
     private Middleware middleware;
 
     @Test
-    public void testConstructor() {
+    public final void testConstructor() {
         middleware = new Middleware("Topic");
         assertEquals(middleware.getTopic(), "Topic");
     }
 
     @After
-    public void postTest() {
+    public final void postTest() {
         middleware.disconnect();
         middleware = null;
     }

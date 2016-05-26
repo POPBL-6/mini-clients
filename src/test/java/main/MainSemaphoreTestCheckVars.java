@@ -18,14 +18,14 @@ public class MainSemaphoreTestCheckVars {
     private Method method;
 
     @Before
-    public void preTest() throws NoSuchMethodException {
+    public final void preTest() throws NoSuchMethodException {
         mainSemaphore = new MainSemaphore();
         method = MainSemaphore.class.getDeclaredMethod("checkVariables");
         method.setAccessible(true);
     }
 
     @Test
-    public void testAllGood() throws InvocationTargetException, IllegalAccessException {
+    public final void testAllGood() throws InvocationTargetException, IllegalAccessException {
         mainSemaphore.setTopic("Topic");
         mainSemaphore.setAddress("Address");
         mainSemaphore.setPort("Port");
@@ -34,7 +34,7 @@ public class MainSemaphoreTestCheckVars {
     }
 
     @Test
-    public void testParameterNull() throws InvocationTargetException, IllegalAccessException {
+    public final void testParameterNull() throws InvocationTargetException, IllegalAccessException {
         mainSemaphore.setTopic("Topic");
         mainSemaphore.setAddress(null);
         mainSemaphore.setPort("Port");
@@ -43,7 +43,7 @@ public class MainSemaphoreTestCheckVars {
     }
 
     @After
-    public void postTest() {
+    public final void postTest() {
         mainSemaphore = null;
         method = null;
     }

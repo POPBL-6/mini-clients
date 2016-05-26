@@ -21,13 +21,13 @@ public class MiddlewareTestConnection {
     private PSPort connectionMock;
 
     @Before
-    public void preTest() {
+    public final void preTest() {
         middleware = new Middleware("Topic");
         connectionMock = createMock(PSPort.class);
     }
 
     @Test
-    public void testDisconnect() {
+    public final void testDisconnect() {
         // Record
         connectionMock.disconnect();
         expectLastCall();
