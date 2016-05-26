@@ -20,10 +20,10 @@ public class Middleware {
     /**
      * This constructor sets the needed variables to connect and executes "connect()" method.
      *
-     * @param newTtopic
+     * @param newTopic
      */
-    public Middleware(String newTtopic) {
-        topic = newTtopic;
+    public Middleware(String newTopic) {
+        topic = newTopic;
     }
 
     /**
@@ -105,7 +105,7 @@ public class Middleware {
      *
      * @return connection
      */
-    public PSPort getConnection() {
+    public final PSPort getConnection() {
         return connection;
     }
 

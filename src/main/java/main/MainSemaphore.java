@@ -14,6 +14,7 @@ public class MainSemaphore {
     private String topic;
     private String address;
     private String port;
+    private String connection;
 
     /**
      * Main thread of the semaphore, will initialized the whole system with the parameters of the main.
@@ -21,6 +22,7 @@ public class MainSemaphore {
      *      - "-t": The topic in which the program will publish data.
      *      - "-a": The address of the broker.
      *      - "-p": The port of the broker.
+     *      - "-c": Type of connection ("TCP" or "SSL")
      */
     public final boolean init(String ... args) {
         boolean error = false;
@@ -32,6 +34,8 @@ public class MainSemaphore {
                     case "-a": this.address = args[i + 1];
                         break;
                     case "-p": this.port = args[i + 1];
+                        break;
+                    case "-c": this.connection = args[i + 1];
                         break;
                     default: LOGGER.fatal("Incompatible argument detected.");
                         error = true;
@@ -113,7 +117,7 @@ public class MainSemaphore {
      * This method will launch JavaFX UI.
      */
     public final void launch() {
-        String [] args = new String[]{topic, address, port};
+        String [] args = new String[]{topic, address, port, connection};
         Application.launch(UI.class, args);
     }
 

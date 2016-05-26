@@ -1,5 +1,6 @@
 package ui;
 
+import api.PSPortSSL;
 import api.PSPortTCP;
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -27,6 +28,15 @@ public class UI extends Application {
     private static final String IMAGE_AMBER = "/images/amber.png";
     private static final String IMAGE_GREEN = "/images/green.png";
     private static final String FXML_PATH = "/fxml/design.fxml";
+    private static final String SSL_TYPE = "SSL";
+    private static final String TCP_TYPE = "TCP";
+    private static final int SSL_CODE = 1;
+    private static final int TCP_CODE = 0;
+    private static final int ERROR_CODE = -1;
+    private static final int ADDRESS_INDEX = 1;
+    private static final int PORT_INDEX = 2;
+    private static final int TOPIC_INDEX = 0;
+    private static final int CONN_INDEX = 3;
     private Middleware middleware;
 
     @FXML
@@ -38,7 +48,13 @@ public class UI extends Application {
     @Override
     public final void init() throws IOException {
         middleware = new Middleware(getTopic());
-        middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
+        if (getConnection() == SSL_CODE) {
+            middleware.connect(new PSPortSSL(getAddress(), Integer.parseInt(getPort())));
+        } else if (getConnection() == TCP_CODE) {
+            middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
+        } else {
+            // TODO: Kill.
+        }
     }
 
     /**
@@ -47,7 +63,7 @@ public class UI extends Application {
      * @return topic
      */
     private String getTopic() {
-        return this.getParameters().getRaw().get(0);
+        return getParameterAt(TOPIC_INDEX);
     }
 
     /**
@@ -56,7 +72,7 @@ public class UI extends Application {
      * @return address
      */
     private String getAddress() {
-        return this.getParameters().getRaw().get(1);
+        return getParameterAt(ADDRESS_INDEX);
     }
 
     /**
@@ -65,7 +81,30 @@ public class UI extends Application {
      * @return address
      */
     private String getPort() {
-        return this.getParameters().getRaw().get(2);
+        return getParameterAt(PORT_INDEX);
+    }
+
+    /**
+     * This method will take the connection of the arguments.
+     *
+     * @return connectionType
+     */
+    private int getConnection() {
+        String type = getParameterAt(CONN_INDEX);
+        if ((SSL_TYPE).equals(type)) {
+            LOGGER.info("Stabilising a SSL socket.");
+            return SSL_CODE;
+        } else if ((TCP_TYPE).equals(type)) {
+            LOGGER.info("Stabilising a TCP socket.");
+            return TCP_CODE;
+        } else {
+            LOGGER.fatal("Can't start a " + type + " connection.");
+            return ERROR_CODE;
+        }
+    }
+
+    private String getParameterAt(int index) {
+        return this.getParameters().getRaw().get(index);
     }
 
     /**
