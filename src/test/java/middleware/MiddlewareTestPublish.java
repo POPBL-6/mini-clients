@@ -2,7 +2,6 @@ package middleware;
 
 import api.PSPort;
 import data.MessagePublish;
-import org.easymock.EasyMock;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
 import org.junit.Before;
