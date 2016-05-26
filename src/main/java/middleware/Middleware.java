@@ -39,6 +39,7 @@ public class Middleware {
     public final void disconnect() {
         if (connection != null) {
             connection.disconnect();
+            connection = null;
             LOGGER.info("Closing connection.");
         }
     }
@@ -97,6 +98,15 @@ public class Middleware {
      */
     public final String getTopic() {
         return topic;
+    }
+
+    /**
+     * This method will return the connection of the middleware.
+     *
+     * @return connection
+     */
+    public PSPort getConnection() {
+        return connection;
     }
 
 }

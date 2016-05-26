@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class will test the publish method of the Middleware.
@@ -29,15 +30,16 @@ public class MiddlewareTestPublish {
 
     @Test
     public void testPublish() {
-        Object o = new String("I'm publishing this");
+        Object o = "I'm publishing this";
         // Record
-        connectionMock.publish(EasyMock.anyObject());
+        connectionMock.publish(anyObject());
         expectLastCall();
         replay(connectionMock);
         // Test
         middleware.connect(connectionMock);
         middleware.publish(middleware.createMessage(o));
         verify();
+        assertEquals(middleware.getLastSample(), middleware.createMessage(o));
     }
 
     @Test (expected = NullPointerException.class)

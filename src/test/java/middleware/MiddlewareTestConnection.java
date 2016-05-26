@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This class will test the publish method of the Middleware.
@@ -35,6 +36,7 @@ public class MiddlewareTestConnection {
         middleware.connect(connectionMock);
         middleware.disconnect();
         verify();
+        assertEquals(middleware.getConnection(), null);
     }
 
 }

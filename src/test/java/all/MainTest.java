@@ -1,3 +1,5 @@
+package all;
+
 import main.MainSemaphoreTest;
 import middleware.MiddlewareTest;
 import org.junit.runner.RunWith;
