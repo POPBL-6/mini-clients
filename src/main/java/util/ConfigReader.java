@@ -8,7 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Created by Urko on 27/05/2016.
+ * Class that will be used to read config files.
+ * @author Urko
  */
 public class ConfigReader {
 
@@ -20,15 +21,20 @@ public class ConfigReader {
      * @param file File name.
      * @return The config file content.
      */
-    public final String readConfigFile(String file) {
+    public static String readConfigFile(String file) {
         Scanner s = null;
+        String config = null;
         try {
             s = new Scanner(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             LOGGER.fatal("Can't find the file " + file, e);
         }
-        String config = s.nextLine();
-        s.close();
+        try {
+            config = s.nextLine();
+            s.close();
+        } catch (NullPointerException e) {
+            LOGGER.fatal("File " + file + "is null", e);
+        }
         return config;
     }
 
