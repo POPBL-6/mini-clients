@@ -53,8 +53,7 @@ public class Middleware {
         try {
             this.value = message.getDataObject();
         } catch (ClassNotFoundException | IOException e) {
-            LOGGER.fatal("Can't save last sample.");
-            LOGGER.info(e);
+            LOGGER.fatal("Can't save last sample.", e);
         }
         LOGGER.info("Message published successfully with topic '" + topic + " and value '" + value.toString() + "'");
     }
@@ -70,8 +69,7 @@ public class Middleware {
         try {
             message.setDataObject(newValue);
         } catch (IOException e) {
-            LOGGER.fatal("An error has occurred setting a value to a message publication. Exception: " + e.getMessage());
-            LOGGER.info(e);
+            LOGGER.fatal("An error has occurred setting a value to a message publication.", e);
         }
         return message;
     }

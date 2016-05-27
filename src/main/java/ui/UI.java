@@ -104,8 +104,7 @@ public class UI extends Application {
         try {
             parent = FXMLLoader.load(UI.class.getResource(FXML_PATH));
         } catch (IOException e) {
-            LOGGER.fatal("Can't find FXML file.");
-            LOGGER.info(e);
+            LOGGER.fatal("Can't find FXML file.", e);
         }
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
