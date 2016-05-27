@@ -1,6 +1,6 @@
 package ui;
 
-import api.PSPortTCP;
+import api.PSPortFactory;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import middleware.Middleware;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.ConfigReader;
 
 import java.io.IOException;
 
@@ -27,6 +28,8 @@ public class UI extends Application {
     private static final String IMAGE_AMBER = "/images/amber.png";
     private static final String IMAGE_GREEN = "/images/green.png";
     private static final String FXML_PATH = "/fxml/design.fxml";
+    private static final String CONFIG_PATH = "config.dat";
+    private static final String TOPIC_PATH = "topic.dat";
     private Middleware middleware;
 
     @FXML
@@ -37,35 +40,12 @@ public class UI extends Application {
      */
     @Override
     public final void init() throws IOException {
-        middleware = new Middleware(getTopic());
-        middleware.connect(new PSPortTCP(getAddress(), Integer.parseInt(getPort())));
-    }
-
-    /**
-     * This method will take the topic from the arguments of JavaFX.
-     *
-     * @return topic
-     */
-    private String getTopic() {
-        return this.getParameters().getRaw().get(0);
-    }
-
-    /**
-     * This method will take the address from the arguments of JavaFX
-     *
-     * @return address
-     */
-    private String getAddress() {
-        return this.getParameters().getRaw().get(1);
-    }
-
-    /**
-     * This method will take the port from the arguments of JavaFX
-     *
-     * @return address
-     */
-    private String getPort() {
-        return this.getParameters().getRaw().get(2);
+        middleware = new Middleware(new ConfigReader().readConfigFile(TOPIC_PATH));
+        try {
+            middleware.connect(PSPortFactory.getPort("file " + CONFIG_PATH));
+        } catch (Throwable throwable) {
+            LOGGER.fatal("Can't create PSPort.", throwable);
+        }
     }
 
     /**
