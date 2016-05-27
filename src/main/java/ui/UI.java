@@ -114,4 +114,12 @@ public class UI extends Application {
         LOGGER.info("UI started successfully.");
     }
 
+    /**
+     * Main thread of the program
+     * @param args
+     */
+    public static void main(String ... args) {
+        launch(args);
+    }
+
 }
