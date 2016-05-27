@@ -9,6 +9,7 @@ import java.io.IOException;
 
 /**
  * Middleware is the class that will create the connection and publish the message to the broker.
+ * @author Urko
  */
 public class Middleware {
 
@@ -19,22 +20,21 @@ public class Middleware {
 
     /**
      * This constructor sets the needed variables to connect and executes "connect()" method.
-     *
-     * @param newTopic
+     * @param newTopic The topic will publish on.
      */
     public Middleware(String newTopic) {
         topic = newTopic;
     }
 
     /**
-     * Connect will try to connect to a broker in a concrete address and port using TCP.
+     * Give the connection to the class.
      */
     public final void connect(PSPort newConnection) {
         connection = newConnection;
     }
 
     /**
-     * This method will close the connection to the broker.
+     * Close the connection to the broker.
      */
     public final void disconnect() {
         if (connection != null) {
@@ -45,9 +45,8 @@ public class Middleware {
     }
 
     /**
-     * This method will send a message to the broker.
-     *
-     * @param message
+     * Send a message to the broker.
+     * @param message A MessagePublish object.
      */
     public final void publish(MessagePublish message) {
         connection.publish(message);
@@ -61,10 +60,9 @@ public class Middleware {
     }
 
     /**
-     * This class wil create a MessagePublish object.
-     *
-     * @param newValue
-     * @return
+     * Create a MessagePublish object.
+     * @param newValue Object value that will use to create the new Message.
+     * @return The new MessagePublish object.
      */
     public final MessagePublish createMessage(Object newValue) {
         MessagePublish message = new MessagePublish();
@@ -79,9 +77,8 @@ public class Middleware {
     }
 
     /**
-     * This method returns the object value of the last message sent to the broker.
+     * Object value of the last message sent to the broker.
      * If in this execution there is no last message saved in the program, the method will ask for it to the broker.
-     *
      * @return value
      */
     public final Object getLastSample() {
@@ -92,8 +89,7 @@ public class Middleware {
     }
 
     /**
-     * This method will return the topic of the client.
-     *
+     * Topic of the client.
      * @return topic
      */
     public final String getTopic() {
@@ -101,8 +97,7 @@ public class Middleware {
     }
 
     /**
-     * This method will return the connection of the middleware.
-     *
+     * Connection to the middleware.
      * @return connection
      */
     public final PSPort getConnection() {

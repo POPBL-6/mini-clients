@@ -40,7 +40,7 @@ public class UI extends Application {
      */
     @Override
     public final void init() throws IOException {
-        middleware = new Middleware(new ConfigReader().readConfigFile(TOPIC_PATH));
+        middleware = new Middleware(ConfigReader.readConfigFile(TOPIC_PATH));
         try {
             middleware.connect(PSPortFactory.getPort("file " + CONFIG_PATH));
         } catch (Throwable throwable) {
