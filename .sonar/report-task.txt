@@ -1,0 +1,5 @@
+projectKey=popbl6-mini-client
+serverUrl=http://130.211.151.31
+dashboardUrl=http://130.211.151.31/dashboard/index/popbl6-mini-client
+ceTaskId=AVTxmKLkbeoHcULTpWUa
+ceTaskUrl=http://130.211.151.31/api/ce/task?id=AVTxmKLkbeoHcULTpWUa
