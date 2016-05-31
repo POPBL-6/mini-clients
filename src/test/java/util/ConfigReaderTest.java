@@ -11,7 +11,7 @@ public class ConfigReaderTest {
         assertEquals(ConfigReader.readConfigFile("test.dat"), "Prueba");
     }
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public final void testConfigNotFile()  {
         assertEquals(ConfigReader.readConfigFile("a.dat"), null);
     }
