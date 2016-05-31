@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Logentries>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss ZZZ} %F.%L level:%-5p%m"/>
+            <name>le</name>
+            <token>97e47f0b-887d-46aa-a01f-34ac55277b89</token>
+        </Logentries>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="le" />
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

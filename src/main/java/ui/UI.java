@@ -50,7 +50,6 @@ public class UI extends Application {
 
     /**
      * When the amber area is touched, this event will be thrown.
-     *
      * @param event
      */
     @FXML
@@ -62,7 +61,6 @@ public class UI extends Application {
 
     /**
      * When the green area is touched, this event will be thrown.
-     *
      * @param event
      */
     @FXML
@@ -74,7 +72,6 @@ public class UI extends Application {
 
     /**
      * When the red area is touched, this event will be thrown.
-     *
      * @param event
      */
     @FXML
@@ -86,7 +83,6 @@ public class UI extends Application {
 
     /**
      * This method is used to change the viewing image.
-     *
      * @param path
      */
     private void changeImage(String path) {
@@ -95,7 +91,6 @@ public class UI extends Application {
 
     /**
      * This method will start the JavaFX UI.
-     *
      * @param primaryStage
      */
     @Override
