@@ -16,8 +16,6 @@ public class ConfigReader {
 
     private static final Logger LOGGER = LogManager.getLogger(ConfigReader.class);
 
-    private ConfigReader() {}
-
     /**
      * Method reads a config file from a concrete path.
      * This config method must be of a single line.
