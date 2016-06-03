@@ -7,6 +7,9 @@ env:
    #   via the "travis encrypt" command using the project repo's public key
    - secure: "FUiNvVHqge3YPxRyLPNP5OIs03sCq9bjoSQaLOYMbjrHuIal4s2II3V4v4dGdHu64xpHgGuUocgGiKFAbAxS1zORHIuO9Cl3SAykvhXxlymkLSwN44XURoSRZQZ7BJvietq8+pE6gMvebd0mJT5jM4eLJf6Aogmjp6U+1MKuRkBB8HCR7L+XbBkpeEmR4kAj67xJFqrBPGY1R1V06Z55TrqjagMBfyfMnAJzURxWA7wwrs3PPhZM2he2PKR0ecPdsHaf53Y/8phYSNvzLe1AnvlVd/gdNG2eH8XG/KZDL/fVplnVDmCY3uMQVx+fytp+ZEXDzEewy1eZ2wCKO8gX9r3YnqJfFvWMe6hIoZueTse5uMH8lwxMxH+s6GtoXglW4rFCBQkIlVSl0Ph+yehvICrfa+v/qSVdvyDzW3Sg7tMENNLl3HRZW/02Ea8dReOWzLXfxlLQOovJcyfvpVdulRig99b0JSpXXFFGmA+IiQ3fFfg8vgOepJE/5AvvTmcKg4wd9TJKsmwkZZKPLeFV2we+tgua8/0236+ZrDHb2+AGN930oQTHHepdyisfvzW6XvMisekTxKGM8JlZb4ci5JcuwL9Ffvzav/Y1IBPeGkBY0mJGNafGlNMk/OnZO+eCVprNPXxxn0pV/pFqvHHc/9RulSj4etf1hMEIlKF+h24="
 addons:
+  apt:
+      packages:
+        - oracle-java8-installer
   coverity_scan:
     project:
       name: "POPBL-6/mini-clients"
