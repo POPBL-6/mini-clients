@@ -1,14 +1,15 @@
 package ui;
 
 import api.PSPortFactory;
+import controller.UIController;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import middleware.Middleware;
 import org.apache.logging.log4j.LogManager;
@@ -23,21 +24,12 @@ import java.io.IOException;
 public class UI extends Application {
 
     private static final Logger LOGGER = LogManager.getLogger(UI.class);
-    private static final String FXML_PATH = "/fxml/mainDesign.fxml";
     private static final String APP_TITLE = "Mini Clients";
     private static final String CONFIG_PATH = "config.dat";
     private static final String TOPIC_PATH = "topic.dat";
-    private Stage stage;
     private Middleware middleware;
-
-    @FXML
-    private Button startSemaphore;
-    @FXML
-    private Button startPresenceSensor;
-    @FXML
-    private Button startLightController;
-    @FXML
-    private Button startAlertPanel;
+    private StackPane pane;
+    private Node node;
 
     /**
      * This method will initialize the middleware and other components.
@@ -53,72 +45,72 @@ public class UI extends Application {
         }
     }
 
-    @FXML
-    public void clickAlert(ActionEvent event) {
-        LOGGER.info("Opening Alert Text client...");
-        // TODO: Open semaphore client.
-    }
-
-    @FXML
-    public void clickLight(ActionEvent event) {
-        LOGGER.info("Opening Light Controller client...");
-        // TODO: Open semaphore client.
-    }
-
-    @FXML
-    public void clickPresence(ActionEvent event) {
-        LOGGER.info("Opening Presence Sensor client...");
-        // TODO: Open semaphore client.
-    }
-
-    @FXML
-    public void clickSemaphore(ActionEvent event) {
-        LOGGER.info("Opening Semaphore client...");
-        // TODO: Open semaphore client.
+    /**
+     * This method will remove the node.
+     */
+    public void close() {
+        pane.getChildren().remove(node);
     }
 
     /**
-     * This method will show an alert based on the parameters.
-     * @param type will specify the type of the alert.
-     * @param title will set the title of the window.
-     * @param header will set the text of the header.
-     * @param text will set the content.
+     * This method will reopen the main menu.
      */
-    private void showAlert(Alert.AlertType type, String title, String header, String text) {
-        Alert a = new Alert(type);
-        a.setTitle(title);
-        a.setHeaderText(header);
-        a.setResizable(true);
-        String version = System.getProperty("java.version");
-        String content = String.format(text, version);
-        a.setContentText(content);
-        a.showAndWait();
+    public void reopen() {
+        pane.getChildren().add(node);
     }
 
+    public Middleware getMiddleware() {
+        return middleware;
+    }
+
+    public StackPane getPane() {
+        return pane;
+    }
+
+    /**
+     * This is the start method of the JavaFX UI, executed at "launch(args);"
+     * @param stage the initial stage of the JavaFX UI.
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        if (middleware == null) {
-            showAlert(Alert.AlertType.ERROR, "Fatal error", "Can't establish a connection to the middleware",
-                      "The middleware seems to be down or there could\nbe a error in the configuration file.");
+    public void start(Stage stage) {
+        if (middleware != null) {
+            UIUtils.showAlert(Alert.AlertType.ERROR, "Fatal error", "Can't establish a connection to the middleware",
+                             "The middleware seems to be down or there could\nbe a error in the configuration file.");
             LOGGER.info("Middleware is down, aborting...");
         } else {
-            FXMLLoader loader = new FXMLLoader(UI.class.getResource(FXML_PATH));
-            Parent parent = null;
-            try {
-                parent = loader.load();
-                loader.setController(this);
-            } catch (IOException e) {
-                LOGGER.fatal("Can't find FXML file.", e);
-            }
-            Scene scene = new Scene(parent);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle(APP_TITLE);
-            primaryStage.show();
-            stage = primaryStage;
-            LOGGER.info("UI started successfully.");
+            pane = load(stage);
         }
     }
 
+    /**
+     * This method will load the scene into the stage and will show it.
+     * @param stage the initial stage of the JavaFX UI.
+     */
+    public StackPane load(Stage stage) {
+        LOGGER.info("Loading UI...");
+        StackPane pane = new StackPane();
+        try {
+            UIController uiController = new UIController(this);
+            node = uiController.loadController();
+            pane.getChildren().add(node);
+            LOGGER.info("Pane loaded correctly.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.fatal("Can't find FXML file.", e);
+        }
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.setTitle(APP_TITLE);
+        stage.setResizable(false);
+        stage.show();
+        LOGGER.info("UI started successfully.");
+        return pane;
+    }
+
+    /**
+     * Main class of the mini-clients project, will load the JavaFX UI.
+     * @param args arguments from command line.
+     */
     public static void main(String ... args) {
         launch(args);
     }
